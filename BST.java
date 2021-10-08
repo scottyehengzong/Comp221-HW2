@@ -324,36 +324,30 @@ public class BST {
      * Takes in a new value and handles the empty tree case.  Performs classic BST insertion.
      */
     public void insert(int newValue) {
-        if(isEmpty()){
-            setNodeValue(newValue);
+        BST newNode = new BST(newValue);
+        if(isEmpty()){ //when the tree is empty, insert the new value as a root
+            setNodeValue(newValue); 
+            emptyTree = false;
         }
         else{
-            BST newNode = new BST();
-            newNode.setNodeValue(newValue);
-            if(newValue < nodeValue){
-                BST leftSubTree = getLeftChild();
-                if(leftSubTree.isEmpty()){
+            if(newValue < nodeValue){ //consider the condition that the insert value is smaller than the node value
+                if(getLeftChild() == null){ //if the node does not have a left child, set the insert value as its left child
                     setLeftChild(newNode);
                 }
-                else{
-                    while(leftSubTree.getNodeValue() < nodeValue){
-                        leftSubTree = leftSubTree.getLeftChild();
-                    }
-                    if(!leftSubTree.hasLeftChild()){
-                        setLeftChild(newNode);
-                    }
-                    else{
-
-                    }
+                else{ //if the node has a left child, find the left subtree rooted on the child and repeat the insert method
+                    getLeftChild().insert(newValue);
                 }
             }
-            
+            else{ // consider the condition that the insert value is bigger than the node value
+                if(getRightChild() == null){
+                    setRightChild(newNode); // if the node do not have a right child, set the insert value as its right child
+                }
+                else{ //if the node has a right child, find the right subtree rooted on the child and repeat the insert method
+                    getRightChild().insert(newValue);
+                }
+            }
         }
     	
-    }
-
-    protected BST insertRecur(int value){
-
     }
 
             
